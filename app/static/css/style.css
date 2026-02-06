@@ -1,64 +1,42 @@
-/* Genel Stil */
-body { background-color: #0f0f0f; }
-.card { border-radius: 10px; }
+/* --- MASAÜSTÜ AYARLARI (TASARIMI BOZMAZ) --- */
+body { background-color: #121212 !important; color: white; }
+.card { background-color: #1a1a1a; border: 1px solid #333; margin-bottom: 20px; }
 
-/* Masaüstü Zaman Sütunu */
+/* Zaman sütunu için senin istediğin parlak turkuaz */
 .time-cell {
-    color: #00ffcc !important; /* Parlak Turkuaz */
+    color: #00ffcc !important;
     font-family: 'Courier New', monospace;
     font-weight: bold;
-    font-size: 0.85rem;
-    white-space: nowrap;
 }
 
-.news-link { color: #ffffff; text-decoration: none; transition: 0.2s; }
+.news-link { color: #ffffff; text-decoration: none; }
 .news-link:hover { color: #00d4ff; text-decoration: underline; }
 
-/* MOBİL CİHAZ OPTİMİZASYONU */
+/* --- MOBİL TASARIM (SADECE 768PX ALTI) --- */
 @media (max-width: 768px) {
-    h2 { text-align: center; font-size: 1.5rem; }
-    
-    /* Tabloyu kart yapısına çevir */
-    thead { display: none; } /* Başlıkları mobilde gizle */
-    
-    table, tbody, tr, td {
-        display: block;
-        width: 100%;
-    }
-
-    tr {
+    /* Tablo yapısını dikey karta çevir */
+    #news-table-body tr {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #444;
         margin-bottom: 15px;
-        border: 1px solid #333 !important;
-        border-radius: 10px;
-        padding: 12px;
-        background: #1a1a1a;
+        padding: 10px;
+        border-radius: 8px;
+        background: #222;
     }
 
-    td {
-        border: none !important;
-        padding: 5px 0 !important;
-        text-align: left;
+    #news-table-body td {
+        border: none;
+        padding: 5px 0;
+        display: flex;
+        flex-direction: column;
     }
 
-    /* Zamanı en üste al */
-    .time-cell {
-        display: block;
-        border-bottom: 1px solid #333;
-        margin-bottom: 8px;
-        padding-bottom: 5px !important;
-        font-size: 0.75rem !important;
-    }
+    /* Görseldeki gibi etiketleri (Zaman, Başlık vb.) ekleyelim */
+    #news-table-body td:nth-child(1)::before { content: "ZAMAN"; color: #00ffcc; font-size: 0.7rem; font-weight: bold; }
+    #news-table-body td:nth-child(2)::before { content: "BAŞLIK"; color: #00d4ff; font-size: 0.7rem; font-weight: bold; }
+    #news-table-body td:nth-child(3)::before { content: "RİSK"; color: #ff4444; font-size: 0.7rem; font-weight: bold; }
 
-    /* Haber başlığını belirgin yap */
-    .news-link {
-        font-size: 1.05rem;
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    /* Butonları parmakla basılacak kadar büyüt */
-    .btn {
-        padding: 12px;
-        font-size: 1rem;
-    }
+    /* Masaüstü başlıklarını mobilde gizle */
+    thead { display: none; }
 }

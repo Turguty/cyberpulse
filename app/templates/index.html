@@ -1,44 +1,28 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CyberPulse Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body class="bg-dark text-white">
-    <div class="container mt-4 mt-md-5">
-        <h2 style="color: #00d4ff;" class="mb-4">🛡️ CyberPulse SOC</h2>
-        <div class="row">
+    <div class="container mt-4">
+        <h2 class="text-info">🛡️ CyberPulse SOC</h2>
+        <div class="row mt-4">
             <div class="col-md-4">
-                <div class="card bg-dark border-secondary p-3 mb-4">
-                    <h5 class="text-info">Hızlı Sorgu</h5>
-                    <input type="text" id="tool-input" class="form-control bg-dark text-white border-secondary mb-2" placeholder="CVE veya IP...">
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-primary" onclick="runTool('cve')">CVE Sorgula</button>
-                        <button class="btn btn-info text-white" onclick="runTool('ip')">IP Analizi</button>
-                    </div>
-                    <div id="tool-result" class="alert alert-secondary mt-3 d-none" style="font-size: 0.9rem; word-break: break-word;"></div>
+                <div class="card p-3">
+                    <input type="text" id="tool-input" class="form-control mb-2" placeholder="CVE/IP...">
+                    <button class="btn btn-primary mb-2" onclick="runTool('cve')">CVE Sorgula</button>
+                    <button class="btn btn-info text-white" onclick="runTool('ip')">IP Analizi</button>
+                    <div id="tool-result" class="alert alert-light mt-2 d-none"></div>
                 </div>
             </div>
-            
             <div class="col-md-8">
-                <div class="card bg-dark border-secondary p-3">
-                    <h5 class="text-info mb-3">Son Tehditler</h5>
-                    <div class="table-responsive">
-                        <table class="table table-dark table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Zaman</th>
-                                    <th>Haber Başlığı</th>
-                                    <th>Seviye</th>
-                                </tr>
-                            </thead>
-                            <tbody id="news-table-body">
-                                </tbody>
-                        </table>
-                    </div>
+                <div class="card p-3">
+                    <table class="table table-dark">
+                        <thead><tr><th>Zaman</th><th>Başlık</th><th>Risk</th></tr></thead>
+                        <tbody id="news-table-body"></tbody>
+                    </table>
                 </div>
             </div>
         </div>
