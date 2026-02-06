@@ -1,113 +1,78 @@
-:root {
-    --bg-body: #0d0f12;
-    --bg-card: #1a1d21;
-    --text-primary: #ffffff;
-    --text-muted: #a0a8b1;
-    --accent-blue: #007bff;
-    --accent-info: #17a2b8;
-    --border-color: #2d3238;
-}
-
+/* Genel Sayfa Stili */
 body {
-    background-color: var(--bg-body);
-    color: var(--text-primary);
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 0;
+    background-color: #121212 !important;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Başlıkların Görünürlüğü - Kesin Çözüm */
-h1, h2, h3, h4, h5, h6, .card-header, .navbar-brand {
-    color: #ffffff !important;
-    font-weight: 700 !important;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-}
-
+/* Kart Yapısı */
 .card {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    margin-bottom: 20px;
+    background-color: #1a1a1a !important;
+    border: 1px solid #333 !important;
+    border-radius: 8px;
 }
 
-/* Arama Kutusu ve Butonlar */
-#toolInput {
-    background-color: #0d0f12 !important;
+.card-header {
+    background-color: #252525 !important;
+    border-bottom: 1px solid #333 !important;
+    font-weight: bold;
+}
+
+/* --- ZAMAN SÜTUNU ÖZEL AYARI --- */
+/* Tablodaki ilk sütun (Zaman) için net görünürlük */
+table tbody tr td:first-child {
+    color: #00ffcc !important; /* Parlak Turkuaz */
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 0.9rem;
+    white-space: nowrap; /* Zamanın alt alta binmesini önler */
+    padding-left: 15px !important;
+}
+
+/* Tablo Genel Ayarları */
+.table {
+    color: #e0e0e0 !important;
+    margin-bottom: 0;
+}
+
+.table thead th {
+    color: #66b2ff !important; /* Başlıklar için yumuşak mavi */
+    border-bottom: 2px solid #333 !important;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #2c2c2c !important;
+}
+
+/* Haber Linkleri */
+.news-link {
     color: #ffffff !important;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.news-link:hover {
+    color: #00d4ff !important;
+    text-decoration: underline;
+}
+
+/* Form ve Buton Düzeltmeleri */
+.form-control {
+    background-color: #252525 !important;
     border: 1px solid #444 !important;
-    height: 50px;
+    color: white !important;
 }
 
-#toolInput::placeholder {
-    color: #666;
+.form-control:focus {
+    border-color: #00d4ff !important;
+    box-shadow: none !important;
 }
 
-/* Mobil Uyumluluk */
-@media (max-width: 768px) {
-    .container {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-    .input-group {
-        display: flex !important;
-        flex-direction: column !important;
-    }
-    .input-group > * {
-        width: 100% !important;
-        margin-bottom: 8px;
-        border-radius: 8px !important;
-    }
-    /* Tabloyu mobilde dikey liste yap */
-    .table thead { display: none; }
-    .table td {
-        display: block;
-        text-align: left;
-        padding: 10px 15px !important;
-        border: none;
-    }
-    .table td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        color: var(--accent-info);
-        display: block;
-        margin-bottom: 2px;
-        font-size: 0.8rem;
-    }
-    .table td:last-child {
-        border-bottom: 1px solid var(--border-color);
-        text-align: center !important;
-    }
-}
-
-/* Kritiklik Rozetleri */
-.badge-critical {
-    background-color: #dc3545;
-    color: white;
-    padding: 5px 12px;
-    border-radius: 6px;
-    font-weight: 800;
-    font-size: 0.75rem;
-    display: inline-block;
-}
-
-.badge-low {
-    background-color: #28a745;
-    color: white;
-    padding: 5px 12px;
-    border-radius: 6px;
-    font-size: 0.75rem;
-    display: inline-block;
-}
-
-/* İşlem Butonları */
-.btn-ai-support {
-    border: 1px solid var(--accent-info);
-    color: var(--accent-info);
-    background: transparent;
-    transition: 0.3s;
-}
-
-.btn-ai-support:hover {
-    background: var(--accent-info);
-    color: white;
+.alert-secondary {
+    background-color: #252525 !important;
+    border-color: #444 !important;
+    color: #00d4ff !important;
 }
