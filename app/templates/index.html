@@ -2,67 +2,59 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>CyberPulse Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>CyberPulse SOC</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
-        body { background-color: #121212; color: #e0e0e0; }
-        .card { background-color: #1e1e1e; border: 1px solid #333; color: white; }
-        .table { color: #ccc; }
+        body { background-color: #050505; color: #00ff41; font-family: 'Courier New', monospace; }
+        .card { background-color: #0d0d0d; border: 1px solid #00ff41; margin-bottom: 20px; }
+        .btn-cyber { color: #00ff41; border: 1px solid #00ff41; background: transparent; }
+        .btn-cyber:hover { background: #00ff41; color: #000; }
+        #toolResult { background: #000; border: 1px dashed #00ff41; padding: 15px; display: none; color: #fff; white-space: pre-wrap; }
     </style>
 </head>
 <body>
     <div class="container mt-4">
-        <h1 class="text-center mb-4">🛡️ CyberPulse Haber Paneli</h1>
-        
-        <div class="row">
-            <div class="col-md-6 offset-md-3 mb-5">
-                <div class="card p-3">
-                    <h5 class="text-center">Haber Dağılımı (Kritiklik Seviyesi)</h5>
-                    <canvas id="criticalityChart"></canvas>
-                </div>
+        <h2 class="text-center mb-4">[ CYBERPULSE_SOC ]</h2>
+        <div class="card p-3">
+            <h5>> ARASTIRMA_MODULU</h5>
+            <div class="input-group">
+                <input type="text" id="toolInput" class="form-control bg-black text-success border-success" placeholder="CVE veya IP...">
+                <button class="btn btn-cyber" onclick="runTool('CVE')">CVE_SORGULA</button>
+                <button class="btn btn-cyber" onclick="runTool('THREAT')">TEHDIT_ARA</button>
             </div>
+            <div id="toolResult" class="mt-3"></div>
         </div>
-
-        <div class="card p-4">
-            <h3>Son Haberler</h3>
-            <table class="table table-dark table-hover">
-                <thead>
-                    <tr>
-                        <th>Tarih</th>
-                        <th>Seviye</th>
-                        <th>Haber Başlığı</th>
-                        <th>Link</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in news %}
-                    <tr>
-                        <td>{{ item['published_date'] }}</td>
-                        <td>{{ item['criticality'] }}</td>
-                        <td>{{ item['title'] }}</td>
-                        <td><a href="{{ item['link'] }}" target="_blank" class="btn btn-sm btn-outline-info">Oku</a></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
+        <div class="card p-3">
+            <table class="table table-dark">
+                <thead><tr><th>Zaman</th><th>Risk</th><th>Başlık</th><th>Link</th></tr></thead>
+                <tbody id="news-table-body"></tbody>
             </table>
         </div>
     </div>
-
     <script>
-        const ctx = document.getElementById('criticalityChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: {{ labels|safe }},
-                datasets: [{
-                    data: {{ values|safe }},
-                    backgroundColor: ['#ff4d4d', '#ffa500', '#4caf50'], // Kırmızı, Turuncu, Yeşil
-                    borderColor: '#121212',
-                    borderWidth: 2
-                }]
-            }
-        });
+        async function updateDashboard() {
+            const res = await fetch('/api/data');
+            const data = await res.json();
+            document.getElementById('news-table-body').innerHTML = data.news.map(n => 
+                `<tr><td>${n.published_date}</td><td>${n.criticality}</td><td>${n.title}</td><td><a href="${n.link}" target="_blank" class="btn btn-sm btn-cyber">GIT</a></td></tr>`
+            ).join('');
+        }
+        async function runTool(type) {
+            const val = document.getElementById('toolInput').value;
+            const resDiv = document.getElementById('toolResult');
+            if(!val) return;
+            resDiv.style.display = "block";
+            resDiv.innerText = "Sorgulanıyor...";
+            const response = await fetch('/api/tool', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({type: type, value: val})
+            });
+            const data = await response.json();
+            resDiv.innerText = data.result;
+        }
+        setInterval(updateDashboard, 30000);
+        updateDashboard();
     </script>
 </body>
 </html>

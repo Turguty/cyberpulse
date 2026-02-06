@@ -1,21 +1,29 @@
-version: '3.8'
-
 services:
-  # Telegram Bot ve Scraper Servisi
   bot:
     build: .
+    container_name: cp_threat_engine
     command: python app/main.py
     env_file: .env
+    environment:
+      - PYTHONUNBUFFERED=1  # Logların anında ekrana düşmesini sağlar
+    restart: unless-stopped
     volumes:
       - .:/app
 
-  # Web Arayüzü Servisi
   dashboard:
     build: .
+    container_name: cp_live_dashboard
     command: python app/dashboard.py
     ports:
       - "5000:5000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
     volumes:
       - .:/app
+      - ./app/templates:/app/templates
     depends_on:
       - bot
+
+volumes:
+  cyber_data:
