@@ -15,3 +15,8 @@ gönderen hem de yerel bir web dashboard'unda görselleştiren bir araçtır.
 1. `.env` dosyasını oluşturun ve `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` bilgilerini girin.
 2. `docker-compose up --build` komutunu çalıştırın.
 3. Dashboard'a `http://localhost:5000` adresinden erişin.
+
+
+
+test
+
