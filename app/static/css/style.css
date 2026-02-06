@@ -1,116 +1,40 @@
-/* --- GENEL TASARIM --- */
-body { 
-    background-color: #0f172a !important; 
-    color: #e2e8f0; 
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-}
+/* --- GENEL VE INPUT (Önceki düzeltmeler dahil) --- */
+body { background-color: #0f172a !important; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; }
+.card { background-color: #1e293b !important; border: 1px solid #334155 !important; border-radius: 12px; }
 
-.card { 
-    background-color: #1e293b !important; 
-    border: 1px solid #334155 !important; 
-    border-radius: 12px;
-}
-
-/* INPUT DÜZENLEMESİ (Görünürlük Sorunu Çözümü) */
-/* Text Input (Hızlı Analiz Alanı) Yazı Rengi Düzenlemesi */
 .form-control {
-    background-color: #0f172a !important; /* Koyu arka plan */
-    border: 1px solid #334155 !important; /* Belirgin çerçeve */
-    color: #ffffff !important;           /* YAZI RENGİ: Kesin Beyaz */
-    caret-color: #38bdf8;                /* Yazma imleci rengi: Mavi */
-}
-
-/* Yazı yazarken veya odaklandığında (Focus) */
-.form-control:focus {
-    background-color: #1e293b !important; /* Odaklanınca hafif açılan arka plan */
-    color: #ffffff !important;           /* Yazı rengi beyaz kalmaya devam eder */
-    border-color: #38bdf8 !important;     /* Çerçeve parlak mavi olur */
-    box-shadow: 0 0 0 0.25rem rgba(56, 189, 248, 0.25) !important;
-}
-
-/* Placeholder (İpucu yazısı) Rengi */
-.form-control::placeholder {
-    color: #64748b !important;           /* "CVE veya IP..." yazısının rengi */
-    opacity: 0.8;
-}
-
-/* SORGU SONUCU (Taşma Engeli) */
-#tool-result {
-    max-height: 300px; 
-    overflow-y: auto;
     background-color: #0f172a !important;
     border: 1px solid #334155 !important;
-    color: #38bdf8 !important;
-    font-family: 'Courier New', monospace;
-    font-size: 0.85rem;
-    word-break: break-word;
+    color: #ffffff !important; /* Beyaz yazı rengi korundu */
 }
 
-/* TABLO TASARIMI (Masaüstü) */
-.table { color: #f8fafc !important; }
-.time-cell { color: #2dd4bf !important; font-family: 'Courier New', monospace; font-weight: bold; }
-.news-link { color: #f8fafc; text-decoration: none; font-weight: 500; }
-.news-link:hover { color: #38bdf8; text-decoration: underline; }
-
-/* KAYNAĞA GİT BUTONU */
-.source-btn {
+/* AI BUTONU STİLİ */
+.ai-btn {
     font-size: 0.75rem !important;
-    padding: 4px 12px !important;
-    border-radius: 6px;
-    border-color: #38bdf8 !important;
-    color: #38bdf8 !important;
+    padding: 4px 8px !important;
+    border-color: #fbbf24 !important; /* Turuncu tonu */
+    color: #fbbf24 !important;
     transition: 0.3s;
 }
-.source-btn:hover {
-    background-color: #38bdf8 !important;
+.ai-btn:hover {
+    background-color: #fbbf24 !important;
     color: #0f172a !important;
 }
 
-/* --- MOBİL TASARIM (KART GÖRÜNÜMÜ) --- */
+/* TABLO VE MOBİL (Golden Version Korundu) */
+#tool-result {
+    max-height: 300px; overflow-y: auto; background-color: #0f172a !important;
+    border: 1px solid #334155 !important; color: #38bdf8 !important;
+    font-family: 'Courier New', monospace; font-size: 0.85rem; padding: 15px;
+}
+
 @media (max-width: 768px) {
-    thead { display: none; } 
-
-    #news-table-body tr {
-        display: flex;
-        flex-direction: column;
-        background: #1e293b;
-        margin-bottom: 20px;
-        padding: 15px;
-        border-radius: 12px;
-        border: 1px solid #444;
-    }
-
-    #news-table-body td {
-        display: block;
-        border: none !important;
-        padding: 0 0 12px 0 !important;
-        position: relative;
-        padding-top: 22px !important;
-    }
-
-    /* Etiketler (Fotoğraftaki Turkuaz Yapı) */
-    #news-table-body td::before {
-        position: absolute;
-        top: 0;
-        left: 0;
-        font-size: 0.7rem;
-        font-weight: 700;
-        color: #2dd4bf; 
-        text-transform: uppercase;
-    }
-
+    thead { display: none; }
+    #news-table-body tr { display: flex; flex-direction: column; background: #1e293b; margin-bottom: 20px; padding: 15px; border: 1px solid #444; border-radius: 12px; }
+    #news-table-body td { display: block; border: none !important; padding: 0 0 12px 0 !important; position: relative; padding-top: 22px !important; }
+    #news-table-body td::before { position: absolute; top: 0; left: 0; font-size: 0.7rem; font-weight: 700; color: #2dd4bf; text-transform: uppercase; }
     #news-table-body td:nth-child(1)::before { content: "ZAMAN"; }
     #news-table-body td:nth-child(2)::before { content: "BAŞLIK"; }
     #news-table-body td:nth-child(3)::before { content: "RİSK"; }
     #news-table-body td:nth-child(4)::before { content: "İŞLEM"; }
-
-    .news-link { font-size: 1.1rem; display: block; line-height: 1.4; }
-    
-    .source-btn {
-        display: block;
-        width: 100%;
-        padding: 10px !important;
-        font-size: 0.9rem !important;
-        text-align: center;
-    }
 }

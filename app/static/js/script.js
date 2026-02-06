@@ -24,6 +24,23 @@ async function loadNews() {
     }
 }
 
+async function analyzeWithAI(title) {
+    const resultDiv = document.getElementById('tool-result');
+    resultDiv.classList.remove('d-none');
+    resultDiv.innerText = "AI Haberi Analiz Ediyor...";
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // Sonucu görmesi için yukarı kaydır
+
+    try {
+        const res = await fetch('/api/ai-analyze', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({title: title})
+        });
+        const data = await res.json();
+        resultDiv.innerText = data.result;
+    } catch (e) { resultDiv.innerText = "AI Analizi başarısız."; }
+}
+
 async function runTool(type) {
     const val = document.getElementById('tool-input').value;
     const resultDiv = document.getElementById('tool-result');

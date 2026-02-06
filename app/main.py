@@ -28,6 +28,24 @@ def send_to_telegram(news):
     except:
         pass
 
+@app.route('/api/ai-analyze', methods=['POST'])
+def ai_analyze():
+    data = request.json
+    news_title = data.get('title', '')
+    
+    # Burada AI modeline gönderilecek promptu hazırlıyoruz
+    prompt = f"Aşağıdaki siber güvenlik haberini analiz et ve 3 kısa maddede risklerini açıkla: {news_title}"
+    
+    try:
+        # Örnek: Eğer Gemini veya başka bir AI entegrasyonun varsa burada çağırabilirsin.
+        # Şimdilik stabilite için hızlı bir analiz taslağı döndürüyoruz:
+        result = f"🔍 AI Analizi ({news_title}):\n1. Potansiyel sızma riski barındırıyor.\n2. Sistem yamalarının kontrol edilmesi önerilir.\n3. İlgili portlar izlenmelidir."
+        return jsonify({"result": result})
+    except Exception as e:
+        return jsonify({"result": "AI analizi sırasında bir hata oluştu."}), 500
+
+
+
 if __name__ == "__main__":
     init_db()
     print("CyberPulse SOC Engine Aktif (Dual AI Mode)...")
