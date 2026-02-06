@@ -6,22 +6,29 @@ async function updateDashboard() {
         const data = await res.json();
         const tbody = document.getElementById('news-table-body');
         
-        tbody.innerHTML = data.news.map(n => `
+        tbody.innerHTML = data.news.map(n => {
+            const isCritical = n.criticality.includes('🔴');
+            const badgeClass = isCritical ? 'badge-critical' : 'badge-low';
+            
+            return `
             <tr>
-                <td class="small" style="color: #999;">${n.published_date}</td>
-                <td>
-                    <span class="critical-badge ${n.criticality.includes('🔴') ? 'badge-red' : 'badge-green'}">
-                        ${n.criticality}
-                    </span>
+                <td data-label="Zaman" class="small text-muted">${n.published_date}</td>
+                <td data-label="Risk">
+                    <span class="${badgeClass}">${n.criticality}</span>
                 </td>
-                <td class="fw-bold text-white">${n.title}</td>
-                <td class="text-end">
-                    <button class="btn btn-ai btn-sm me-2" onclick="getSupport('${n.title}')">AI DESTEK</button>
-                    <a href="${n.link}" target="_blank" class="btn btn-sm btn-outline-secondary">GİT</a>
+                <td data-label="Başlık" class="fw-bold text-white">${n.title}</td>
+                <td data-label="İşlem" class="text-end">
+                    <div class="d-flex justify-content-end gap-2">
+                        <button class="btn btn-ai-support btn-sm" onclick="getSupport('${n.title}')">AI DESTEK</button>
+                        <a href="${n.link}" target="_blank" class="btn btn-sm btn-outline-secondary">GİT</a>
+                    </div>
                 </td>
             </tr>
-        `).join('');
-    } catch (e) { console.error("Veri hatası:", e); }
+            `;
+        }).join('');
+    } catch (e) {
+        console.error("Dashboard güncellenemedi:", e);
+    }
 }
 
 async function runTool(type) {
@@ -31,7 +38,7 @@ async function runTool(type) {
     if(!val) return;
     
     resDiv.style.display = "block";
-    outDiv.innerHTML = 'İşleniyor...';
+    outDiv.innerHTML = '<div class="spinner-border spinner-border-sm"></div> Analiz ediliyor...';
     
     const response = await fetch('/api/tool', {
         method: 'POST',
@@ -44,7 +51,7 @@ async function runTool(type) {
 
 async function getSupport(title) {
     document.getElementById('aiModalTitle').innerText = title;
-    document.getElementById('modalAiBody').innerHTML = '<div class="text-center p-4"><div class="spinner-border text-info"></div><br>Analiz ediliyor...</div>';
+    document.getElementById('modalAiBody').innerHTML = '<div class="text-center p-5"><div class="spinner-border text-info"></div><br><br>SOC Analistleri (Mistral & Llama) raporluyor...</div>';
     aiModal.show();
 
     const response = await fetch('/api/tool', {
