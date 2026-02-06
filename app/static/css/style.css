@@ -12,14 +12,26 @@ body {
 }
 
 /* INPUT DÜZENLEMESİ (Görünürlük Sorunu Çözümü) */
+/* Text Input (Hızlı Analiz Alanı) Yazı Rengi Düzenlemesi */
 .form-control {
-    background-color: #0f172a !important;
-    border: 1px solid #334155 !important;
-    color: #ffffff !important;
+    background-color: #0f172a !important; /* Koyu arka plan */
+    border: 1px solid #334155 !important; /* Belirgin çerçeve */
+    color: #ffffff !important;           /* YAZI RENGİ: Kesin Beyaz */
+    caret-color: #38bdf8;                /* Yazma imleci rengi: Mavi */
 }
+
+/* Yazı yazarken veya odaklandığında (Focus) */
 .form-control:focus {
-    border-color: #38bdf8 !important;
+    background-color: #1e293b !important; /* Odaklanınca hafif açılan arka plan */
+    color: #ffffff !important;           /* Yazı rengi beyaz kalmaya devam eder */
+    border-color: #38bdf8 !important;     /* Çerçeve parlak mavi olur */
     box-shadow: 0 0 0 0.25rem rgba(56, 189, 248, 0.25) !important;
+}
+
+/* Placeholder (İpucu yazısı) Rengi */
+.form-control::placeholder {
+    color: #64748b !important;           /* "CVE veya IP..." yazısının rengi */
+    opacity: 0.8;
 }
 
 /* SORGU SONUCU (Taşma Engeli) */
