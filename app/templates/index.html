@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CyberPulse | SOC Intelligence</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-body: #0f1113;
-            --bg-card: #1a1d21;
-            --text-main: #e9ecef;
+            --bg-body: #0d0f12;
+            --bg-card: #16191d;
+            --text-main: #ffffff;      /* Tam beyaz */
+            --text-muted: #b0b8c1;    /* Açık gri */
             --accent-green: #2ecc71;
             --accent-blue: #3498db;
             --border-color: #2d3238;
@@ -23,9 +24,17 @@
             padding-bottom: 50px;
         }
 
+        /* Başlıklar İçin Özel Kontrast */
+        h1, h2, h3, h4, h5, h6, .navbar-brand {
+            color: #ffffff !important;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
         .navbar {
             background-color: var(--bg-card);
             border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
             margin-bottom: 30px;
         }
 
@@ -33,78 +42,86 @@
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .card-header {
             border-bottom: 1px solid var(--border-color);
-            background: transparent;
-            font-weight: 600;
-            padding: 1.2rem;
+            padding: 1.25rem;
+            color: #ffffff;
+            font-size: 1.1rem;
         }
 
+        /* Form Elemanları */
+        .form-control {
+            background-color: #0d0f12 !important;
+            border: 1px solid var(--border-color) !important;
+            color: #ffffff !important;
+            padding: 12px;
+        }
+
+        .form-control::placeholder {
+            color: #6c757d;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-blue) !important;
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+        }
+
+        /* Tablo Tasarımı */
         .table {
-            color: var(--text-main);
-            margin-bottom: 0;
+            color: #ffffff;
         }
 
         .table thead th {
-            background-color: rgba(255,255,255,0.03);
+            color: #ffffff; /* Başlıklar tam beyaz */
+            background-color: rgba(255, 255, 255, 0.05);
             border-bottom: 2px solid var(--border-color);
-            color: #adb5bd;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
+            font-size: 0.85rem;
+            padding: 15px;
         }
 
         .table td {
             border-bottom: 1px solid var(--border-color);
-            vertical-align: middle;
-            padding: 1rem;
+            padding: 15px;
+            color: #e0e0e0;
         }
 
+        /* Butonlar */
         .btn-ai {
-            background-color: rgba(52, 152, 219, 0.1);
-            color: var(--accent-blue);
-            border: 1px solid var(--accent-blue);
-            font-size: 0.8rem;
-            transition: all 0.3s;
+            background-color: transparent;
+            color: #00d2ff;
+            border: 1px solid #00d2ff;
+            font-weight: 600;
+            padding: 6px 15px;
+            border-radius: 6px;
         }
 
         .btn-ai:hover {
-            background-color: var(--accent-blue);
-            color: white;
+            background-color: #00d2ff;
+            color: #000;
         }
 
+        /* Badge Renkleri */
         .critical-badge {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
             font-weight: bold;
         }
 
-        .badge-red { background: rgba(231, 76, 60, 0.2); color: #e74c3c; }
-        .badge-green { background: rgba(46, 204, 113, 0.2); color: #2ecc71; }
+        .badge-red { background: #ff4d4d; color: #ffffff; }
+        .badge-green { background: #27ae60; color: #ffffff; }
 
-        /* Arama Alanı */
-        .search-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: white;
-            border-radius: 8px;
-            padding: 12px;
-        }
-
-        /* AI Sonuç Paneli */
         #aiOutput {
-            background: #111;
+            background: #000000;
+            color: #00ff41; /* Çıktı kısmı için okunabilir terminal yeşili */
             border-radius: 8px;
             padding: 20px;
-            font-size: 0.95rem;
-            line-height: 1.6;
+            font-family: 'Consolas', monospace;
             white-space: pre-wrap;
-            color: #ddd;
+            border: 1px solid #333;
         }
     </style>
 </head>
@@ -112,44 +129,45 @@
 
 <nav class="navbar navbar-dark">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="#">🛡️ CyberPulse <span class="text-primary">SOC</span></a>
-        <span class="text-muted small">Dual AI Engine: Mistral + Llama 3.1</span>
+        <a class="navbar-brand" href="#">🛡️ CyberPulse <span style="color: var(--accent-blue);">SOC</span></a>
+        <div class="text-end">
+            <span class="badge bg-secondary">Dual AI Engine</span>
+        </div>
     </div>
 </nav>
 
 <div class="container">
-    <div class="row mb-4">
+    <div class="row">
         <div class="col-12">
-            <div class="card p-4">
+            <div class="card p-4 shadow-lg">
                 <h5 class="mb-3">Global Tehdit Araştırması</h5>
-                <div class="input-group">
-                    <input type="text" id="toolInput" class="form-control search-box" placeholder="CVE-2024-xxxx veya IP adresi girin...">
-                    <button class="btn btn-outline-primary px-4" onclick="runTool('CVE')">CVE Sorgula</button>
-                    <button class="btn btn-outline-info px-4" onclick="runTool('THREAT')">Tehdit Analizi</button>
+                <p class="text-muted small">CVE kodlarını veya IP adreslerini Dual-AI motoruyla derinlemesine analiz edin.</p>
+                <div class="input-group mb-2">
+                    <input type="text" id="toolInput" class="form-control" placeholder="Örn: CVE-2026-25514">
+                    <button class="btn btn-primary px-4" onclick="runTool('CVE')">CVE Sorgula</button>
+                    <button class="btn btn-info px-4 text-white" onclick="runTool('THREAT')">Tehdit Ara</button>
                 </div>
-                <div id="toolResult" class="mt-3" style="display:none;">
-                    <div class="p-3 border border-primary rounded bg-dark">
-                        <h6 class="text-primary mb-2">Yapay Zeka Raporu:</h6>
-                        <div id="aiOutput"></div>
-                    </div>
+                
+                <div id="toolResult" class="mt-4" style="display:none;">
+                    <h6 class="text-info mb-2 fw-bold">Yapay Zeka Analiz Raporu:</h6>
+                    <div id="aiOutput"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <span>Canlı Tehdit Akışı</span>
-            <button class="btn btn-sm btn-outline-secondary" onclick="updateDashboard()">Yenile</button>
+    <div class="card shadow-lg">
+        <div class="card-header fw-bold">
+            <i class="bi bi-rss"></i> Canlı Siber Tehdit İstihbarat Akışı
         </div>
         <div class="table-responsive">
-            <table class="table">
+            <table class="table align-middle">
                 <thead>
                     <tr>
-                        <th>Tarih</th>
-                        <th>Seviye</th>
+                        <th width="15%">Zaman</th>
+                        <th width="10%">Risk</th>
                         <th>Tehdit Başlığı</th>
-                        <th class="text-end">İşlemler</th>
+                        <th width="25%" class="text-end">Analiz & Kaynak</th>
                     </tr>
                 </thead>
                 <tbody id="news-table-body">
@@ -159,16 +177,16 @@
     </div>
 </div>
 
-<div class="modal fade" id="aiModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="aiModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content bg-dark border-secondary">
-            <div class="modal-header border-secondary">
-                <h5 class="modal-title text-info" id="aiModalTitle">AI Destek Analizi</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content bg-dark border-info">
+            <div class="modal-header border-info">
+                <h5 class="modal-title text-info" id="aiModalTitle">Detaylı AI Analizi</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <div id="modalAiBody" class="p-2" style="white-space: pre-wrap; color: #eee;">
-                    Analiz hazırlanıyor...
+                <div id="modalAiBody" class="p-3" style="white-space: pre-wrap; color: #f0f0f0; line-height: 1.6;">
+                    Veriler işleniyor...
                 </div>
             </div>
         </div>
@@ -180,25 +198,27 @@
     const aiModal = new bootstrap.Modal(document.getElementById('aiModal'));
 
     async function updateDashboard() {
-        const res = await fetch('/api/data');
-        const data = await res.json();
-        const tbody = document.getElementById('news-table-body');
-        
-        tbody.innerHTML = data.news.map(n => `
-            <tr>
-                <td class="small text-muted">${n.published_date}</td>
-                <td>
-                    <span class="critical-badge ${n.criticality.includes('🔴') ? 'badge-red' : 'badge-green'}">
-                        ${n.criticality}
-                    </span>
-                </td>
-                <td class="fw-medium">${n.title}</td>
-                <td class="text-end">
-                    <button class="btn btn-ai me-2" onclick="getSupport('${n.title}')">AI DESTEK</button>
-                    <a href="${n.link}" target="_blank" class="btn btn-sm btn-outline-secondary">KAYNAK</a>
-                </td>
-            </tr>
-        `).join('');
+        try {
+            const res = await fetch('/api/data');
+            const data = await res.json();
+            const tbody = document.getElementById('news-table-body');
+            
+            tbody.innerHTML = data.news.map(n => `
+                <tr>
+                    <td class="small" style="color: #999;">${n.published_date}</td>
+                    <td>
+                        <span class="critical-badge ${n.criticality.includes('🔴') ? 'badge-red' : 'badge-green'}">
+                            ${n.criticality}
+                        </span>
+                    </td>
+                    <td class="fw-bold text-white">${n.title}</td>
+                    <td class="text-end">
+                        <button class="btn btn-ai btn-sm me-2" onclick="getSupport('${n.title}')">AI DESTEK</button>
+                        <a href="${n.link}" target="_blank" class="btn btn-sm btn-outline-secondary">GİT</a>
+                    </td>
+                </tr>
+            `).join('');
+        } catch (e) { console.error("Veri çekme hatası:", e); }
     }
 
     async function runTool(type) {
@@ -208,7 +228,7 @@
         if(!val) return;
         
         resDiv.style.display = "block";
-        outDiv.innerHTML = '<div class="spinner-border text-primary" role="status"></div> Analiz ediliyor...';
+        outDiv.innerHTML = 'İşleniyor...';
         
         const response = await fetch('/api/tool', {
             method: 'POST',
@@ -221,7 +241,7 @@
 
     async function getSupport(title) {
         document.getElementById('aiModalTitle').innerText = title;
-        document.getElementById('modalAiBody').innerHTML = '<div class="text-center p-4"><div class="spinner-border text-info"></div><br>Yapay Zeka derinlemesine analiz yapıyor...</div>';
+        document.getElementById('modalAiBody').innerHTML = '<div class="text-center p-5"><div class="spinner-border text-info"></div><br><br>Mistral ve Llama 3.1 verileri karşılaştırıyor...</div>';
         aiModal.show();
 
         const response = await fetch('/api/tool', {
