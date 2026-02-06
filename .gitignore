@@ -4,6 +4,7 @@
 # Veritabanı ve yerel veriler
 *.db
 cyberpulse.db
+app/data.db
 
 # Python dosyaları
 __pycache__/
