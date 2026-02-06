@@ -2,7 +2,6 @@ from flask import Flask, render_template, jsonify, request
 import sys
 import os
 
-# Docker klasör hiyerarşisi için path ekleme
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from database import get_db_connection
@@ -31,7 +30,7 @@ def tool_query():
     q_type = data.get('type')
     q_val = data.get('value')
     if not q_val:
-        return jsonify({"result": "Lütfen bir değer girin."})
+        return jsonify({"result": "Veri girilmedi."})
     
     result = get_ai_analysis_for_tool(q_type, q_val)
     return jsonify({"result": result})
