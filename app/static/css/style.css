@@ -1,94 +1,63 @@
-/* --- GENEL TASARIM VE RENK PALETİ --- */
+/* --- GENEL TASARIM --- */
 body { 
     background-color: #0f172a !important; 
     color: #e2e8f0; 
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
-/* Kart Yapıları (SOC Teması) */
 .card { 
     background-color: #1e293b !important; 
     border: 1px solid #334155 !important; 
     border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-/* Başlıklar */
-h3, h6 {
-    letter-spacing: 0.5px;
-}
-
-/* --- MASAÜSTÜ: ÜST ANALİZ PANELİ VE SONUÇ KUTUSU --- */
-#tool-result {
-    max-height: 250px; 
-    overflow-y: auto;  /* Çok uzun sonuçlarda kaydırma çubuğu çıkar */
+/* INPUT DÜZENLEMESİ (Görünürlük Sorunu Çözümü) */
+.form-control {
     background-color: #0f172a !important;
     border: 1px solid #334155 !important;
-    color: #38bdf8 !important;
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
-    font-size: 0.85rem;
-    padding: 15px;
-    border-radius: 8px;
-    word-break: break-word; /* Uzun IP/URL'leri alt satıra böler */
+    color: #ffffff !important;
 }
-
-/* Form Elemanları */
-/* Text Input (Hızlı Analiz Alanı) Yazı Rengi Düzenlemesi */
-.form-control {
-    background-color: #0f172a !important; /* Koyu arka plan */
-    border: 1px solid #334155 !important; /* Belirgin çerçeve */
-    color: #ffffff !important;           /* YAZI RENGİ: Kesin Beyaz */
-    caret-color: #38bdf8;                /* Yazma imleci rengi: Mavi */
-}
-
-/* Yazı yazarken veya odaklandığında (Focus) */
 .form-control:focus {
-    background-color: #1e293b !important; /* Odaklanınca hafif açılan arka plan */
-    color: #ffffff !important;           /* Yazı rengi beyaz kalmaya devam eder */
-    border-color: #38bdf8 !important;     /* Çerçeve parlak mavi olur */
+    border-color: #38bdf8 !important;
     box-shadow: 0 0 0 0.25rem rgba(56, 189, 248, 0.25) !important;
 }
 
-/* Placeholder (İpucu yazısı) Rengi */
-.form-control::placeholder {
-    color: #64748b !important;           /* "CVE veya IP..." yazısının rengi */
-    opacity: 0.8;
-}
-
-/* --- TABLO TASARIMI (Masaüstü) --- */
-.table { 
-    color: #f8fafc !important; 
-}
-
-.time-cell { 
-    color: #2dd4bf !important; 
-    font-family: 'JetBrains Mono', monospace; 
-    font-weight: bold; 
+/* SORGU SONUCU (Taşma Engeli) */
+#tool-result {
+    max-height: 300px; 
+    overflow-y: auto;
+    background-color: #0f172a !important;
+    border: 1px solid #334155 !important;
+    color: #38bdf8 !important;
+    font-family: 'Courier New', monospace;
     font-size: 0.85rem;
+    word-break: break-word;
 }
 
-.news-link { 
-    color: #f8fafc; 
-    text-decoration: none; 
-    font-weight: 500;
-    transition: color 0.2s ease-in-out;
+/* TABLO TASARIMI (Masaüstü) */
+.table { color: #f8fafc !important; }
+.time-cell { color: #2dd4bf !important; font-family: 'Courier New', monospace; font-weight: bold; }
+.news-link { color: #f8fafc; text-decoration: none; font-weight: 500; }
+.news-link:hover { color: #38bdf8; text-decoration: underline; }
+
+/* KAYNAĞA GİT BUTONU */
+.source-btn {
+    font-size: 0.75rem !important;
+    padding: 4px 12px !important;
+    border-radius: 6px;
+    border-color: #38bdf8 !important;
+    color: #38bdf8 !important;
+    transition: 0.3s;
+}
+.source-btn:hover {
+    background-color: #38bdf8 !important;
+    color: #0f172a !important;
 }
 
-.news-link:hover { 
-    color: #38bdf8; 
-    text-decoration: underline; 
-}
-
-/* --- MOBİL TASARIM (FOTOĞRAFTAKİ KART YAPISI) --- */
+/* --- MOBİL TASARIM (KART GÖRÜNÜMÜ) --- */
 @media (max-width: 768px) {
-    /* Masaüstü başlıklarını mobilde gizle */
-    thead { 
-        display: none; 
-    } 
+    thead { display: none; } 
 
-    /* Her tablo satırını bağımsız bir karta dönüştür */
     #news-table-body tr {
         display: flex;
         flex-direction: column;
@@ -96,43 +65,40 @@ h3, h6 {
         margin-bottom: 20px;
         padding: 15px;
         border-radius: 12px;
-        border: 1px solid #334155;
+        border: 1px solid #444;
     }
 
-    /* Hücreleri dikey diz ve etiket ekle */
     #news-table-body td {
         display: block;
         border: none !important;
         padding: 0 0 12px 0 !important;
         position: relative;
-        padding-top: 22px !important; /* Etiket için üst boşluk */
+        padding-top: 22px !important;
     }
 
-    /* Zaman, Başlık, Risk Etiketleri (CSS ile otomatik eklenir) */
+    /* Etiketler (Fotoğraftaki Turkuaz Yapı) */
     #news-table-body td::before {
         position: absolute;
         top: 0;
         left: 0;
         font-size: 0.7rem;
         font-weight: 700;
-        color: #2dd4bf; /* Turkuaz etiket rengi */
+        color: #2dd4bf; 
         text-transform: uppercase;
-        letter-spacing: 0.5px;
     }
 
     #news-table-body td:nth-child(1)::before { content: "ZAMAN"; }
     #news-table-body td:nth-child(2)::before { content: "BAŞLIK"; }
     #news-table-body td:nth-child(3)::before { content: "RİSK"; }
+    #news-table-body td:nth-child(4)::before { content: "İŞLEM"; }
 
-    /* Mobilde link fontunu büyüt */
-    .news-link { 
-        font-size: 1.05rem; 
-        display: block; 
-        line-height: 1.4;
-    }
-
-    /* Mobilde butonları tam genişlik yap (Opsiyonel) */
-    .btn {
-        padding: 10px;
+    .news-link { font-size: 1.1rem; display: block; line-height: 1.4; }
+    
+    .source-btn {
+        display: block;
+        width: 100%;
+        padding: 10px !important;
+        font-size: 0.9rem !important;
+        text-align: center;
     }
 }

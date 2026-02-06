@@ -12,10 +12,15 @@ async function loadNews() {
                     <td class="time-cell">${item.published_date}</td>
                     <td><a href="${item.link}" target="_blank" class="news-link">${item.title}</a></td>
                     <td><span class="badge bg-secondary">${item.criticality}</span></td>
+                    <td>
+                        <a href="${item.link}" target="_blank" class="btn btn-outline-primary btn-sm source-btn">
+                            Kaynağa Git
+                        </a>
+                    </td>
                 </tr>`;
         });
     } catch (e) {
-        console.error("Haberler yüklenirken hata oluştu:", e);
+        console.error("Haberler yüklenemedi:", e);
     }
 }
 
@@ -29,7 +34,7 @@ async function runTool(type) {
     }
     
     resultDiv.classList.remove('d-none');
-    resultDiv.innerText = "Sorgulanıyor...";
+    resultDiv.innerText = "Analiz ediliyor...";
 
     try {
         const res = await fetch('/api/tool', {
@@ -40,9 +45,10 @@ async function runTool(type) {
         const data = await res.json();
         resultDiv.innerText = data.result;
     } catch (e) {
-        resultDiv.innerText = "Hata: Sunucuya bağlanılamadı.";
+        resultDiv.innerText = "Hata: Sunucu ile iletişim kurulamadı.";
     }
 }
 
-// Sayfa yüklendiğinde çalıştır
 document.addEventListener('DOMContentLoaded', loadNews);
+// Her 2 dakikada bir otomatik yenile
+setInterval(loadNews, 120000);
