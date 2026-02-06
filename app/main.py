@@ -4,18 +4,27 @@ import requests
 from flask import Flask, render_template, jsonify, request
 from datetime import datetime
 from dotenv import load_dotenv
+from pathlib import Path
 
-# .env dosyasındaki değişkenleri yükle
-load_dotenv()
+# --- .ENV YOLU DÜZELTMESİ ---
+# main.py'nin bulunduğu klasörün (app) bir üst dizinine git ve .env'yi bul
+base_path = Path(__file__).resolve().parent.parent
+env_path = os.path.join(base_path, '.env')
+load_dotenv(dotenv_path=env_path)
 
 app = Flask(__name__)
 
-# Yapılandırmayı ortam değişkenlerinden çekiyoruz
+# Yapılandırma
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 MODEL_NAME = "mistralai/mistral-7b-instruct:free"
 
+# Debug için (Terminalde/Loglarda anahtarın gelip gelmediğini gör)
+print(f"--- BAŞLATMA ---")
+print(f"Aranan .env yolu: {env_path}")
+print(f"API Anahtarı Yüklendi mi: {bool(OPENROUTER_API_KEY)}")
+print(f"----------------")
+
 def get_cyber_news():
-    # Mevcut haber botu fonksiyonunuzla burayı besleyebilirsiniz
     return [
         {
             "published_date": datetime.now().strftime("%H:%M:%S"),
@@ -47,14 +56,14 @@ def ai_analyze():
     title = data.get('title', '')
     
     if not title:
-        return jsonify({"result": "Analiz için başlık iletilmedi."}), 400
+        return jsonify({"result": "Başlık bulunamadı."}), 400
 
     if not OPENROUTER_API_KEY:
-        return jsonify({"result": "Hata: API anahtarı .env dosyasında bulunamadı!"}), 500
+        return jsonify({"result": "Hata: .env dosyası kök dizinde bulunamadı veya anahtar boş!"}), 500
 
     prompt = (
-        f"Sen profesyonel bir siber güvenlik analistisin. Aşağıdaki haber başlığını analiz et: '{title}'. "
-        f"Bu olayın teknik risklerini ve SOC ekiplerinin alması gereken 3 somut önlemi kısa maddeler halinde Türkçe olarak açıkla."
+        f"Sen bir siber güvenlik uzmanısın. Şu haberi analiz et: '{title}'. "
+        f"3 kısa maddede riskleri ve önlemleri Türkçe açıkla."
     )
 
     try:
@@ -75,7 +84,7 @@ def ai_analyze():
             ai_response = response.json()['choices'][0]['message']['content']
             return jsonify({"result": ai_response})
         else:
-            return jsonify({"result": f"AI Servis Hatası (Kod: {response.status_code})"}), 500
+            return jsonify({"result": f"AI Servis Hatası: {response.status_code}"}), 500
 
     except Exception as e:
         return jsonify({"result": f"Bağlantı Hatası: {str(e)}"}), 500
