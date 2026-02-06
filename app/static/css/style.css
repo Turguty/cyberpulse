@@ -1,29 +1,83 @@
-/* --- GENEL TASARIM --- */
-body { background-color: #0f172a !important; color: #e2e8f0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-.card { background-color: #1e293b !important; border: 1px solid #334155 !important; border-radius: 12px; }
+/* --- GENEL TASARIM VE RENK PALETİ --- */
+body { 
+    background-color: #0f172a !important; 
+    color: #e2e8f0; 
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
 
-/* MASAÜSTÜ: SORGU SONUCU TAŞMA ENGELİ */
+/* Kart Yapıları (SOC Teması) */
+.card { 
+    background-color: #1e293b !important; 
+    border: 1px solid #334155 !important; 
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Başlıklar */
+h3, h6 {
+    letter-spacing: 0.5px;
+}
+
+/* --- MASAÜSTÜ: ÜST ANALİZ PANELİ VE SONUÇ KUTUSU --- */
 #tool-result {
-    max-height: 350px; /* Kutunun aşırı uzamasını engeller */
-    overflow-y: auto;  /* İçerik sığmazsa kaydırma çubuğu çıkar */
+    max-height: 250px; 
+    overflow-y: auto;  /* Çok uzun sonuçlarda kaydırma çubuğu çıkar */
     background-color: #0f172a !important;
     border: 1px solid #334155 !important;
     color: #38bdf8 !important;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
     font-size: 0.85rem;
-    line-height: 1.5;
-    word-break: break-word;
+    padding: 15px;
+    border-radius: 8px;
+    word-break: break-word; /* Uzun IP/URL'leri alt satıra böler */
 }
 
-/* TABLO TASARIMI (Masaüstü) */
-.table { color: #f8fafc !important; border-collapse: separate !important; border-spacing: 0 8px !important; }
-.time-cell { color: #2dd4bf !important; font-family: 'Courier New', monospace; font-weight: bold; }
-.news-link { color: #f8fafc; text-decoration: none; font-weight: 500; }
-.news-link:hover { color: #38bdf8; text-decoration: underline; }
+/* Form Elemanları */
+.form-control {
+    background-color: #0f172a !important;
+    border: 1px solid #334155 !important;
+    color: #ffffff !important;
+}
 
-/* --- MOBİL TASARIM (KART GÖRÜNÜMÜ) --- */
+.form-control:focus {
+    border-color: #38bdf8 !important;
+    box-shadow: 0 0 0 0.25rem rgba(56, 189, 248, 0.25) !important;
+}
+
+/* --- TABLO TASARIMI (Masaüstü) --- */
+.table { 
+    color: #f8fafc !important; 
+}
+
+.time-cell { 
+    color: #2dd4bf !important; 
+    font-family: 'JetBrains Mono', monospace; 
+    font-weight: bold; 
+    font-size: 0.85rem;
+}
+
+.news-link { 
+    color: #f8fafc; 
+    text-decoration: none; 
+    font-weight: 500;
+    transition: color 0.2s ease-in-out;
+}
+
+.news-link:hover { 
+    color: #38bdf8; 
+    text-decoration: underline; 
+}
+
+/* --- MOBİL TASARIM (FOTOĞRAFTAKİ KART YAPISI) --- */
 @media (max-width: 768px) {
-    thead { display: none; } /* Başlıkları mobilde gizle */
+    /* Masaüstü başlıklarını mobilde gizle */
+    thead { 
+        display: none; 
+    } 
 
+    /* Her tablo satırını bağımsız bir karta dönüştür */
     #news-table-body tr {
         display: flex;
         flex-direction: column;
@@ -34,15 +88,16 @@ body { background-color: #0f172a !important; color: #e2e8f0; font-family: 'Segoe
         border: 1px solid #334155;
     }
 
+    /* Hücreleri dikey diz ve etiket ekle */
     #news-table-body td {
         display: block;
         border: none !important;
-        padding: 0 0 15px 0 !important;
+        padding: 0 0 12px 0 !important;
         position: relative;
-        padding-top: 22px !important; /* Etiket için yer */
+        padding-top: 22px !important; /* Etiket için üst boşluk */
     }
 
-    /* Etiketlerin (Zaman, Başlık, Risk) Yerleşimi */
+    /* Zaman, Başlık, Risk Etiketleri (CSS ile otomatik eklenir) */
     #news-table-body td::before {
         position: absolute;
         top: 0;
@@ -58,6 +113,15 @@ body { background-color: #0f172a !important; color: #e2e8f0; font-family: 'Segoe
     #news-table-body td:nth-child(2)::before { content: "BAŞLIK"; }
     #news-table-body td:nth-child(3)::before { content: "RİSK"; }
 
-    .news-link { font-size: 1.05rem; line-height: 1.4; display: block; }
-    .badge { padding: 8px 12px; font-size: 0.8rem; }
+    /* Mobilde link fontunu büyüt */
+    .news-link { 
+        font-size: 1.05rem; 
+        display: block; 
+        line-height: 1.4;
+    }
+
+    /* Mobilde butonları tam genişlik yap (Opsiyonel) */
+    .btn {
+        padding: 10px;
+    }
 }

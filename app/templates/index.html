@@ -8,24 +8,29 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body class="bg-dark text-white">
-    <div class="container-fluid p-4">
-        <h3 class="mb-4 text-info fw-bold">🛡️ CyberPulse SOC</h3>
-        <div class="row g-4">
-            <div class="col-lg-3 col-md-4">
-                <div class="card p-3 shadow-sm h-100">
-                    <h6 class="text-primary fw-bold mb-3">Hızlı Analiz</h6>
-                    <input type="text" id="tool-input" class="form-control bg-dark text-white border-secondary mb-2" placeholder="CVE veya IP...">
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-primary btn-sm" onclick="runTool('cve')">CVE Sorgula</button>
-                        <button class="btn btn-outline-info btn-sm" onclick="runTool('ip')">IP Analizi</button>
+    <div class="container py-4" style="max-width: 1000px;">
+        <h3 class="mb-4 text-info fw-bold text-center">🛡️ CyberPulse SOC</h3>
+        
+        <div class="row g-4 justify-content-center">
+            <div class="col-12">
+                <div class="card p-3 shadow-sm border-info-subtle">
+                    <h6 class="text-primary fw-bold mb-3 text-center">Hızlı Analiz Ünitesi</h6>
+                    <div class="row g-2 align-items-start">
+                        <div class="col-md-8">
+                            <input type="text" id="tool-input" class="form-control bg-dark text-white border-secondary" placeholder="CVE kodu veya IP adresi girin...">
+                        </div>
+                        <div class="col-md-4 d-flex gap-2">
+                            <button class="btn btn-primary w-100 btn-sm" onclick="runTool('cve')">CVE Sorgula</button>
+                            <button class="btn btn-outline-info w-100 btn-sm" onclick="runTool('ip')">IP Analizi</button>
+                        </div>
                     </div>
                     <div id="tool-result" class="alert mt-3 d-none"></div>
                 </div>
             </div>
 
-            <div class="col-lg-9 col-md-8">
+            <div class="col-12">
                 <div class="card p-3 shadow-sm">
-                    <h6 class="text-primary fw-bold mb-3">Tehdit Akışı</h6>
+                    <h6 class="text-primary fw-bold mb-3 text-center">Canlı Tehdit Akışı</h6>
                     <div class="table-responsive">
                         <table class="table table-dark table-hover align-middle">
                             <thead>
