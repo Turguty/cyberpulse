@@ -1,75 +1,64 @@
-/* Mevcut Genel Stiller */
-body {
-    background-color: #121212 !important;
-    color: #ffffff;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+/* Genel Stil */
+body { background-color: #0f0f0f; }
+.card { border-radius: 10px; }
 
-.card {
-    background-color: #1a1a1a !important;
-    border: 1px solid #333 !important;
-    border-radius: 8px;
-    margin-bottom: 20px;
-}
-
-/* ZAMAN SÜTUNU - Senin istediğin parlak ayar */
-table tbody tr td:first-child {
-    color: #00ffcc !important;
+/* Masaüstü Zaman Sütunu */
+.time-cell {
+    color: #00ffcc !important; /* Parlak Turkuaz */
     font-family: 'Courier New', monospace;
     font-weight: bold;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     white-space: nowrap;
 }
 
-.table { color: #e0e0e0 !important; }
+.news-link { color: #ffffff; text-decoration: none; transition: 0.2s; }
+.news-link:hover { color: #00d4ff; text-decoration: underline; }
 
-/* --- MOBİL UYUMLULUK (RESPONSIVE) AYARLARI --- */
-
-/* Tablonun mobilde taşmasını önlemek için */
-.table-responsive {
-    border: none !important;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-/* Küçük ekranlar için özel dokunuşlar */
+/* MOBİL CİHAZ OPTİMİZASYONU */
 @media (max-width: 768px) {
-    .container {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-
-    /* Zaman sütununu mobilde biraz daha küçük yap ki sığsın */
-    table tbody tr td:first-child {
-        font-size: 0.75rem;
-        padding: 8px !important;
-    }
-
-    /* Başlıkların boyutunu küçült */
-    h2 {
-        font-size: 1.5rem;
-        text-align: center;
-    }
-
-    /* Tablo hücrelerindeki padding'i azalt */
-    .table td, .table th {
-        padding: 10px 5px !important;
-        font-size: 0.85rem;
-    }
-
-    /* Butonları mobilde tam genişlik yap */
-    .btn {
+    h2 { text-align: center; font-size: 1.5rem; }
+    
+    /* Tabloyu kart yapısına çevir */
+    thead { display: none; } /* Başlıkları mobilde gizle */
+    
+    table, tbody, tr, td {
+        display: block;
         width: 100%;
-        margin-bottom: 10px;
     }
-}
 
-/* Haber Linkleri */
-.news-link {
-    color: #ffffff !important;
-    text-decoration: none;
-}
+    tr {
+        margin-bottom: 15px;
+        border: 1px solid #333 !important;
+        border-radius: 10px;
+        padding: 12px;
+        background: #1a1a1a;
+    }
 
-.news-link:hover {
-    color: #00d4ff !important;
+    td {
+        border: none !important;
+        padding: 5px 0 !important;
+        text-align: left;
+    }
+
+    /* Zamanı en üste al */
+    .time-cell {
+        display: block;
+        border-bottom: 1px solid #333;
+        margin-bottom: 8px;
+        padding-bottom: 5px !important;
+        font-size: 0.75rem !important;
+    }
+
+    /* Haber başlığını belirgin yap */
+    .news-link {
+        font-size: 1.05rem;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    /* Butonları parmakla basılacak kadar büyüt */
+    .btn {
+        padding: 12px;
+        font-size: 1rem;
+    }
 }

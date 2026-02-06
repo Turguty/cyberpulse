@@ -1,69 +1,55 @@
-const aiModal = new bootstrap.Modal(document.getElementById('aiModal'));
-
-async function updateDashboard() {
+async function loadNews() {
     try {
         const res = await fetch('/api/data');
         const data = await res.json();
-        const tbody = document.getElementById('news-table-body');
-        
-        tbody.innerHTML = data.news.map(n => {
-            const isCritical = n.criticality.includes('🔴');
-            const badgeClass = isCritical ? 'badge-critical' : 'badge-low';
-            
-            return `
-            <tr>
-                <td data-label="Zaman" class="small text-muted">${n.published_date}</td>
-                <td data-label="Risk">
-                    <span class="${badgeClass}">${n.criticality}</span>
-                </td>
-                <td data-label="Başlık" class="fw-bold text-white">${n.title}</td>
-                <td data-label="İşlem" class="text-end">
-                    <div class="d-flex justify-content-end gap-2">
-                        <button class="btn btn-ai-support btn-sm" onclick="getSupport('${n.title}')">AI DESTEK</button>
-                        <a href="${n.link}" target="_blank" class="btn btn-sm btn-outline-secondary">GİT</a>
-                    </div>
-                </td>
-            </tr>
-            `;
-        }).join('');
+        const body = document.getElementById('news-table-body');
+        body.innerHTML = '';
+
+        data.news.forEach(item => {
+            // Tarihi mobilde çok yer kaplamaması için biraz kısaltalım
+            // Örn: "Sat, 07 Feb 2026 01:21:00 GMT" -> "Sat, 07 Feb 2026"
+            const displayDate = item.published_date.split(' ').slice(0, 4).join(' ');
+
+            const row = `
+                <tr>
+                    <td class="time-cell">${displayDate}</td>
+                    <td><a href="${item.link}" target="_blank" class="news-link">${item.title}</a></td>
+                    <td><span class="badge bg-secondary" style="font-size: 0.7rem;">${item.criticality}</span></td>
+                </tr>`;
+            body.innerHTML += row;
+        });
     } catch (e) {
-        console.error("Dashboard güncellenemedi:", e);
+        console.error("Haberler yüklenirken hata oluştu:", e);
     }
 }
 
 async function runTool(type) {
-    const val = document.getElementById('toolInput').value;
-    const resDiv = document.getElementById('toolResult');
-    const outDiv = document.getElementById('aiOutput');
-    if(!val) return;
+    const val = document.getElementById('tool-input').value;
+    const resultDiv = document.getElementById('tool-result');
     
-    resDiv.style.display = "block";
-    outDiv.innerHTML = '<div class="spinner-border spinner-border-sm"></div> Analiz ediliyor...';
+    if(!val) {
+        alert("Lütfen bir CVE kodu veya IP adresi girin!");
+        return;
+    }
     
-    const response = await fetch('/api/tool', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: type, value: val })
-    });
-    const data = await response.json();
-    outDiv.innerText = data.result;
+    resultDiv.classList.remove('d-none');
+    resultDiv.innerText = "Sorgulanıyor...";
+
+    try {
+        const res = await fetch('/api/tool', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({type: type, value: val})
+        });
+        const data = await res.json();
+        resultDiv.innerText = data.result;
+    } catch (e) {
+        resultDiv.innerText = "Sorgu sırasında bir bağlantı hatası oluştu.";
+    }
 }
 
-async function getSupport(title) {
-    document.getElementById('aiModalTitle').innerText = title;
-    document.getElementById('modalAiBody').innerHTML = '<div class="text-center p-5"><div class="spinner-border text-info"></div><br><br>SOC Analistleri (Mistral & Llama) raporluyor...</div>';
-    aiModal.show();
-
-    const response = await fetch('/api/tool', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'CVE', value: title })
-    });
-    const data = await response.json();
-    document.getElementById('modalAiBody').innerText = data.result;
-}
-
+// Sayfa açıldığında ve her 60 saniyede bir haberleri yenile
 document.addEventListener('DOMContentLoaded', () => {
-    updateDashboard();
-    setInterval(updateDashboard, 60000);
+    loadNews();
+    setInterval(loadNews, 60000);
 });

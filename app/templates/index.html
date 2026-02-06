@@ -2,72 +2,47 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberPulse SOC Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CyberPulse Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
-
-<nav class="navbar navbar-dark border-bottom border-secondary mb-4">
-    <div class="container">
-        <h3 class="m-0">🛡️ CyberPulse <span class="text-info">SOC</span></h3>
-    </div>
-</nav>
-
-<div class="container">
-    <div class="card shadow-lg mb-4">
-        <div class="card-header border-secondary bg-transparent">
-            <h5 class="m-0 text-white">Global Tehdit Araştırması</h5>
-        </div>
-        <div class="card-body">
-            <div class="input-group">
-                <input type="text" id="toolInput" class="form-control" placeholder="CVE-2026-xxxx veya IP...">
-                <button class="btn btn-primary fw-bold" onclick="runTool('CVE')">CVE Sorgula</button>
-                <button class="btn btn-info text-white fw-bold" onclick="runTool('THREAT')">Tehdit Ara</button>
+<body class="bg-dark text-white">
+    <div class="container mt-4 mt-md-5">
+        <h2 style="color: #00d4ff;" class="mb-4">🛡️ CyberPulse SOC</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card bg-dark border-secondary p-3 mb-4">
+                    <h5 class="text-info">Hızlı Sorgu</h5>
+                    <input type="text" id="tool-input" class="form-control bg-dark text-white border-secondary mb-2" placeholder="CVE veya IP...">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" onclick="runTool('cve')">CVE Sorgula</button>
+                        <button class="btn btn-info text-white" onclick="runTool('ip')">IP Analizi</button>
+                    </div>
+                    <div id="tool-result" class="alert alert-secondary mt-3 d-none" style="font-size: 0.9rem; word-break: break-word;"></div>
+                </div>
             </div>
-            <div id="toolResult" class="mt-4" style="display:none;">
-                <h6 class="text-info fw-bold">AI Raporu:</h6>
-                <div id="aiOutput" class="p-3 bg-black rounded border border-secondary text-success small"></div>
+            
+            <div class="col-md-8">
+                <div class="card bg-dark border-secondary p-3">
+                    <h5 class="text-info mb-3">Son Tehditler</h5>
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Zaman</th>
+                                    <th>Haber Başlığı</th>
+                                    <th>Seviye</th>
+                                </tr>
+                            </thead>
+                            <tbody id="news-table-body">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="card shadow-lg">
-        <div class="card-header border-secondary bg-transparent">
-            <h5 class="m-0 text-white">Canlı Siber Tehdit İstihbarat Akışı</h5>
-        </div>
-        <div class="table-responsive">
-            <table class="table table-dark table-hover mb-0">
-                <thead>
-                    <tr>
-                        <th width="15%">Zaman</th>
-                        <th width="10%">Risk</th>
-                        <th>Başlık</th>
-                        <th width="20%" class="text-end">İşlem</th>
-                    </tr>
-                </thead>
-                <tbody id="news-table-body">
-                    </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="aiModal" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content bg-dark border-info text-white">
-            <div class="modal-header border-info">
-                <h5 class="modal-title text-info" id="aiModalTitle">Detaylı Analiz</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body" id="modalAiBody" style="white-space: pre-wrap; line-height: 1.6;"></div>
-        </div>
-    </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
