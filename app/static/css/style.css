@@ -1,42 +1,63 @@
-/* --- MASAÜSTÜ AYARLARI (TASARIMI BOZMAZ) --- */
-body { background-color: #121212 !important; color: white; }
-.card { background-color: #1a1a1a; border: 1px solid #333; margin-bottom: 20px; }
+/* --- GENEL TASARIM --- */
+body { background-color: #0f172a !important; color: #e2e8f0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+.card { background-color: #1e293b !important; border: 1px solid #334155 !important; border-radius: 12px; }
 
-/* Zaman sütunu için senin istediğin parlak turkuaz */
-.time-cell {
-    color: #00ffcc !important;
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
+/* MASAÜSTÜ: SORGU SONUCU TAŞMA ENGELİ */
+#tool-result {
+    max-height: 350px; /* Kutunun aşırı uzamasını engeller */
+    overflow-y: auto;  /* İçerik sığmazsa kaydırma çubuğu çıkar */
+    background-color: #0f172a !important;
+    border: 1px solid #334155 !important;
+    color: #38bdf8 !important;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    word-break: break-word;
 }
 
-.news-link { color: #ffffff; text-decoration: none; }
-.news-link:hover { color: #00d4ff; text-decoration: underline; }
+/* TABLO TASARIMI (Masaüstü) */
+.table { color: #f8fafc !important; border-collapse: separate !important; border-spacing: 0 8px !important; }
+.time-cell { color: #2dd4bf !important; font-family: 'Courier New', monospace; font-weight: bold; }
+.news-link { color: #f8fafc; text-decoration: none; font-weight: 500; }
+.news-link:hover { color: #38bdf8; text-decoration: underline; }
 
-/* --- MOBİL TASARIM (SADECE 768PX ALTI) --- */
+/* --- MOBİL TASARIM (KART GÖRÜNÜMÜ) --- */
 @media (max-width: 768px) {
-    /* Tablo yapısını dikey karta çevir */
+    thead { display: none; } /* Başlıkları mobilde gizle */
+
     #news-table-body tr {
         display: flex;
         flex-direction: column;
-        border: 1px solid #444;
-        margin-bottom: 15px;
-        padding: 10px;
-        border-radius: 8px;
-        background: #222;
+        background: #1e293b;
+        margin-bottom: 20px;
+        padding: 15px;
+        border-radius: 12px;
+        border: 1px solid #334155;
     }
 
     #news-table-body td {
-        border: none;
-        padding: 5px 0;
-        display: flex;
-        flex-direction: column;
+        display: block;
+        border: none !important;
+        padding: 0 0 15px 0 !important;
+        position: relative;
+        padding-top: 22px !important; /* Etiket için yer */
     }
 
-    /* Görseldeki gibi etiketleri (Zaman, Başlık vb.) ekleyelim */
-    #news-table-body td:nth-child(1)::before { content: "ZAMAN"; color: #00ffcc; font-size: 0.7rem; font-weight: bold; }
-    #news-table-body td:nth-child(2)::before { content: "BAŞLIK"; color: #00d4ff; font-size: 0.7rem; font-weight: bold; }
-    #news-table-body td:nth-child(3)::before { content: "RİSK"; color: #ff4444; font-size: 0.7rem; font-weight: bold; }
+    /* Etiketlerin (Zaman, Başlık, Risk) Yerleşimi */
+    #news-table-body td::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #2dd4bf; /* Turkuaz etiket rengi */
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
 
-    /* Masaüstü başlıklarını mobilde gizle */
-    thead { display: none; }
+    #news-table-body td:nth-child(1)::before { content: "ZAMAN"; }
+    #news-table-body td:nth-child(2)::before { content: "BAŞLIK"; }
+    #news-table-body td:nth-child(3)::before { content: "RİSK"; }
+
+    .news-link { font-size: 1.05rem; line-height: 1.4; display: block; }
+    .badge { padding: 8px 12px; font-size: 0.8rem; }
 }
