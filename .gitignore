@@ -1,0 +1,17 @@
+# Hassas bilgiler
+.env
+
+# Veritabanı ve yerel veriler
+*.db
+cyberpulse.db
+
+# Python dosyaları
+__pycache__/
+*.pyc
+
+# Docker logları
+*.log
+
+# Sanal ortam
+venv/
+.venv/

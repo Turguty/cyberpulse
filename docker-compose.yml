@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  # Telegram Bot ve Scraper Servisi
+  bot:
+    build: .
+    command: python app/main.py
+    env_file: .env
+    volumes:
+      - .:/app
+
+  # Web Arayüzü Servisi
+  dashboard:
+    build: .
+    command: python app/dashboard.py
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    depends_on:
+      - bot
