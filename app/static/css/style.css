@@ -1,0 +1,84 @@
+:root {
+    --bg-body: #0d0f12;
+    --bg-card: #16191d;
+    --text-main: #ffffff;
+    --text-muted: #b0b8c1;
+    --accent-green: #2ecc71;
+    --accent-blue: #3498db;
+    --border-color: #2d3238;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    padding-bottom: 50px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #ffffff !important;
+    font-weight: 700;
+}
+
+.navbar {
+    background-color: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+/* Mobil Uyumluluk Ayarları */
+@media (max-width: 768px) {
+    .input-group {
+        flex-direction: column;
+    }
+    .input-group > .btn {
+        width: 100%;
+        margin-top: 5px;
+        border-radius: 5px !important;
+    }
+    .table thead {
+        display: none; /* Mobilde tabloyu kart görünümüne yaklaştırır */
+    }
+    .table td {
+        display: block;
+        text-align: left;
+        border: none;
+        padding: 5px 15px;
+    }
+    .table td:last-child {
+        text-align: center;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--border-color);
+    }
+}
+
+.btn-ai {
+    background-color: transparent;
+    color: #00d2ff;
+    border: 1px solid #00d2ff;
+    font-weight: 600;
+}
+
+.critical-badge {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+}
+
+.badge-red { background: #ff4d4d; color: white; }
+.badge-green { background: #27ae60; color: white; }
+
+#aiOutput {
+    background: #000;
+    color: #00ff41;
+    padding: 15px;
+    font-family: monospace;
+    white-space: pre-wrap;
+    font-size: 0.9rem;
+}

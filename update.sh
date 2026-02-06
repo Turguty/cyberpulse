@@ -37,4 +37,4 @@ echo -e "Dashboard: http://localhost:5000"
 echo -e "-----------------------------------------------"
 
 # Çalışan containerları göster
-docker ps
+#docker ps
