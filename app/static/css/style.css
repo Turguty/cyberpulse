@@ -1,31 +1,27 @@
-/* --- GENEL VE INPUT (Önceki düzeltmeler dahil) --- */
 body { background-color: #0f172a !important; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; }
 .card { background-color: #1e293b !important; border: 1px solid #334155 !important; border-radius: 12px; }
 
+/* INPUT BEYAZ YAZI DÜZENLEMESİ */
 .form-control {
     background-color: #0f172a !important;
     border: 1px solid #334155 !important;
-    color: #ffffff !important; /* Beyaz yazı rengi korundu */
+    color: #ffffff !important; /* KESİN BEYAZ */
 }
+.form-control::placeholder { color: #64748b !important; }
 
-/* AI BUTONU STİLİ */
-.ai-btn {
-    font-size: 0.75rem !important;
-    padding: 4px 8px !important;
-    border-color: #fbbf24 !important; /* Turuncu tonu */
-    color: #fbbf24 !important;
-    transition: 0.3s;
-}
-.ai-btn:hover {
-    background-color: #fbbf24 !important;
-    color: #0f172a !important;
-}
-
-/* TABLO VE MOBİL (Golden Version Korundu) */
 #tool-result {
     max-height: 300px; overflow-y: auto; background-color: #0f172a !important;
     border: 1px solid #334155 !important; color: #38bdf8 !important;
     font-family: 'Courier New', monospace; font-size: 0.85rem; padding: 15px;
+}
+
+.time-cell { color: #2dd4bf !important; font-family: 'Courier New', monospace; font-weight: bold; }
+.news-link { color: #f8fafc; text-decoration: none; font-weight: 500; }
+.news-link:hover { color: #38bdf8; text-decoration: underline; }
+
+.source-btn {
+    font-size: 0.75rem !important; padding: 4px 12px !important;
+    border-color: #38bdf8 !important; color: #38bdf8 !important;
 }
 
 @media (max-width: 768px) {
