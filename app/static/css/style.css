@@ -1,45 +1,52 @@
-/* --- GOLDEN VERSION TEMEL AYARLAR --- */
+/* --- GENEL TASARIM --- */
 body { background-color: #0f172a !important; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; }
 .card { background-color: #1e293b !important; border: 1px solid #334155 !important; border-radius: 12px; }
 
-/* INPUT BEYAZ YAZI (Kritik Alan) */
+/* INPUT YAZI RENGİ (Kritik: Yazının görünmesi için) */
 .form-control {
     background-color: #0f172a !important;
     border: 1px solid #334155 !important;
     color: #ffffff !important; 
 }
+.form-control:focus { color: #ffffff !important; border-color: #38bdf8; box-shadow: 0 0 0 0.25rem rgba(56, 189, 248, 0.25); }
 .form-control::placeholder { color: #64748b !important; }
 
+/* ANALİZ SONUÇ KUTUSU (Masaüstü taşma engelli) */
 #tool-result {
-    max-height: 300px; overflow-y: auto; background-color: #0f172a !important;
+    max-height: 350px; overflow-y: auto; background-color: #0f172a !important;
     border: 1px solid #334155 !important; color: #38bdf8 !important;
-    font-family: 'Courier New', monospace; font-size: 0.85rem; padding: 15px;
-    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; padding: 15px; border-radius: 8px;
 }
 
-/* BUTONLAR VE TABLO */
-.time-cell { color: #2dd4bf !important; font-family: 'Courier New', monospace; font-weight: bold; }
-.news-link { color: #f8fafc; text-decoration: none; font-weight: 500; }
+/* TABLO VE BUTONLAR */
+.time-cell { color: #2dd4bf !important; font-weight: bold; font-family: 'JetBrains Mono', monospace; }
+.news-link { color: #f8fafc; text-decoration: none; font-weight: 500; transition: 0.2s; }
+.news-link:hover { color: #38bdf8; text-decoration: underline; }
 
-.source-btn { font-size: 0.7rem !important; padding: 4px 8px !important; border-color: #38bdf8 !important; color: #38bdf8 !important; }
+.source-btn, .ai-btn { font-size: 0.75rem !important; padding: 4px 10px !important; border-radius: 6px; transition: 0.2s; }
+.source-btn { border-color: #38bdf8 !important; color: #38bdf8 !important; }
+.source-btn:hover { background: #38bdf8 !important; color: #0f172a !important; }
 
-/* YENİ: AI BUTONU STİLİ */
-.ai-btn {
-    font-size: 0.7rem !important;
-    padding: 4px 8px !important;
-    border-color: #fbbf24 !important;
-    color: #fbbf24 !important;
-}
-.ai-btn:hover { background-color: #fbbf24 !important; color: #0f172a !important; }
+.ai-btn { border-color: #fbbf24 !important; color: #fbbf24 !important; }
+.ai-btn:hover { background: #fbbf24 !important; color: #0f172a !important; }
 
-/* MOBİL TASARIM (Kusursuz Kart Yapısı) */
+/* --- MOBİL TASARIM (KART GÖRÜNÜMÜ) --- */
 @media (max-width: 768px) {
     thead { display: none; }
-    #news-table-body tr { display: flex; flex-direction: column; background: #1e293b; margin-bottom: 20px; padding: 15px; border: 1px solid #444; border-radius: 12px; }
-    #news-table-body td { display: block; border: none !important; padding: 0 0 12px 0 !important; position: relative; padding-top: 22px !important; }
-    #news-table-body td::before { position: absolute; top: 0; left: 0; font-size: 0.7rem; font-weight: 700; color: #2dd4bf; text-transform: uppercase; }
+    #news-table-body tr { display: flex; flex-direction: column; background: #1e293b; margin-bottom: 20px; padding: 15px; border: 1px solid #334155; border-radius: 12px; }
+    #news-table-body td { display: block; border: none !important; padding: 0 0 12px 0 !important; position: relative; padding-top: 22 * px !important; }
+    
+    /* Etiketler (Zaman, Başlık, Risk, İşlem) */
+    #news-table-body td::before {
+        position: absolute; top: 0; left: 0; font-size: 0.7rem; font-weight: 700;
+        color: #2dd4bf; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+
     #news-table-body td:nth-child(1)::before { content: "ZAMAN"; }
     #news-table-body td:nth-child(2)::before { content: "BAŞLIK"; }
     #news-table-body td:nth-child(3)::before { content: "RİSK"; }
     #news-table-body td:nth-child(4)::before { content: "İŞLEM"; }
+
+    .news-link { font-size: 1.1rem; display: block; line-height: 1.4; }
+    .source-btn, .ai-btn { padding: 10px !important; flex: 1; text-align: center; }
 }

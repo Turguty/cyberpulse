@@ -1,25 +1,27 @@
-from flask import Flask, render_template, jsonify, request
+import os
+import json
 import requests
+from flask import Flask, render_template, jsonify, request
 from datetime import datetime
+from dotenv import load_dotenv
+
+# .env dosyasındaki değişkenleri yükle
+load_dotenv()
 
 app = Flask(__name__)
 
-# Örnek veri çekme fonksiyonu (Haberler için)
+# Yapılandırmayı ortam değişkenlerinden çekiyoruz
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+MODEL_NAME = "mistralai/mistral-7b-instruct:free"
+
 def get_cyber_news():
-    # Bu kısım senin mevcut haber çekme mantığına göre düzenlenmiştir
-    # Örnek statik veri (API'den geliyormuş gibi)
+    # Mevcut haber botu fonksiyonunuzla burayı besleyebilirsiniz
     return [
         {
             "published_date": datetime.now().strftime("%H:%M:%S"),
-            "title": "Yeni Critical RCE Zafiyeti Tespit Edildi (CVE-2026-XXXX)",
-            "link": "https://example.com/news1",
+            "title": "Microsoft Outlook Spoofing Vulnerability (CVE-2024-XXXX)",
+            "link": "https://cve.mitre.org",
             "criticality": "YÜKSEK"
-        },
-        {
-            "published_date": datetime.now().strftime("%H:%M:%S"),
-            "title": "Büyük Bir Botnet Ağı Çökertildi",
-            "link": "https://example.com/news2",
-            "criticality": "ORTA"
         }
     ]
 
@@ -29,50 +31,54 @@ def index():
 
 @app.route('/api/data')
 def get_data():
-    news = get_cyber_news()
-    return jsonify({"news": news})
+    return jsonify({"news": get_cyber_news()})
 
-# --- HIZLI ANALİZ ÜNİTESİ (CVE / IP SORGULAMA) ---
 @app.route('/api/tool', methods=['POST'])
 def run_tool():
     data = request.json
     tool_type = data.get('type')
     value = data.get('value', '').strip()
-
-    if not value:
-        return jsonify({"result": "Lütfen bir değer girin."})
-
-    if tool_type == 'cve':
-        # Burada gerçek bir CVE API'si (örn. NVD) bağlanabilir
-        result = f"🔍 {value} Analizi: Bu zafiyet kritik seviyede olup acil yama gerektirmektedir."
-    elif tool_type == 'ip':
-        # Burada bir IP Intel API'si (örn. VirusTotal/AbuseIPDB) bağlanabilir
-        result = f"🌐 {value} Analizi: Bu IP adresi zararlı faaliyetler ile ilişkilendirilmiştir."
-    else:
-        result = "Bilinmeyen araç tipi."
-
+    result = f"🔍 {value} için {tool_type.upper()} sorgusu tamamlandı."
     return jsonify({"result": result})
 
-# --- YENİ: AI ANALİZ ÜNİTESİ (AI SOR BUTONU İÇİN) ---
 @app.route('/api/ai-analyze', methods=['POST'])
 def ai_analyze():
     data = request.json
     title = data.get('title', '')
     
     if not title:
-        return jsonify({"result": "Analiz edilecek başlık bulunamadı."}), 400
+        return jsonify({"result": "Analiz için başlık iletilmedi."}), 400
 
-    # Bu alan ileride gerçek bir AI (Gemini/GPT) API'si ile değiştirilebilir.
-    # Mevcut tasarımda 'tool-result' kutusuna profesyonel bir analiz döner.
-    analysis = (
-        f"🤖 **CyberPulse AI Analizi**\n\n"
-        f"**Konu:** {title}\n"
-        f"**Değerlendirme:** Bu olay siber güvenlik ekosisteminde orta-yüksek risk barındırmaktadır.\n"
-        f"**Öneri:** Sistem loglarını inceleyin, ağ trafiğini bu başlığa göre filtreleyin ve zafiyet varsa yamaları kontrol edin."
+    if not OPENROUTER_API_KEY:
+        return jsonify({"result": "Hata: API anahtarı .env dosyasında bulunamadı!"}), 500
+
+    prompt = (
+        f"Sen profesyonel bir siber güvenlik analistisin. Aşağıdaki haber başlığını analiz et: '{title}'. "
+        f"Bu olayın teknik risklerini ve SOC ekiplerinin alması gereken 3 somut önlemi kısa maddeler halinde Türkçe olarak açıkla."
     )
-    
-    return jsonify({"result": analysis})
+
+    try:
+        response = requests.post(
+            url="https://openrouter.ai/api/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+                "Content-Type": "application/json",
+            },
+            data=json.dumps({
+                "model": MODEL_NAME,
+                "messages": [{"role": "user", "content": prompt}]
+            }),
+            timeout=20
+        )
+        
+        if response.status_code == 200:
+            ai_response = response.json()['choices'][0]['message']['content']
+            return jsonify({"result": ai_response})
+        else:
+            return jsonify({"result": f"AI Servis Hatası (Kod: {response.status_code})"}), 500
+
+    except Exception as e:
+        return jsonify({"result": f"Bağlantı Hatası: {str(e)}"}), 500
 
 if __name__ == '__main__':
-    # Docker konteyner içinde çalışması için host='0.0.0.0' şart
     app.run(debug=True, host='0.0.0.0', port=5000)
